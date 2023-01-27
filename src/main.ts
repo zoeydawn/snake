@@ -1,7 +1,10 @@
 import { Snake } from "./snake";
 import * as w4 from "./wasm4";
 
+// TODO: update the formatting and get rid of these damn simicolins
+
 const snake = new Snake();
+let frameCount = 0;
 
 // const smiley = memory.data<u8>([
 //   0b11000011, 0b10000001, 0b00100100, 0b00100100, 0b00000000, 0b00100100,
@@ -9,7 +12,12 @@ const snake = new Snake();
 // ]);
 
 export function update(): void {
-  snake.update();
+  frameCount++;
+
+  // speed control
+  if (frameCount % 15 === 0) {
+    snake.update();
+  }
   snake.draw();
 }
 
