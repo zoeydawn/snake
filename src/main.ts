@@ -3,12 +3,13 @@ import * as w4 from "./wasm4";
 
 const snake = new Snake();
 
-const smiley = memory.data<u8>([
-  0b11000011, 0b10000001, 0b00100100, 0b00100100, 0b00000000, 0b00100100,
-  0b10011001, 0b11000011,
-]);
+// const smiley = memory.data<u8>([
+//   0b11000011, 0b10000001, 0b00100100, 0b00100100, 0b00000000, 0b00100100,
+//   0b10011001, 0b11000011,
+// ]);
 
 export function update(): void {
+  snake.update();
   snake.draw();
 }
 
