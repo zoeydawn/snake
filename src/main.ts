@@ -1,11 +1,20 @@
-import { Snake } from "./snake";
+import { Point, Snake } from "./snake";
 import * as w4 from "./wasm4";
 
 // TODO: update the formatting and get rid of these damn simicolins
 
+function rnd(n: i32 = 20): u16 {
+  return u16(Math.floor(Math.random() * n));
+}
+
 const snake = new Snake();
+let fruit = new Point(rnd(20), rnd(20));
 let prevState: u8;
 let frameCount = 0;
+const fruitSprite = memory.data<u8>([
+  0x00, 0xa0, 0x02, 0x00, 0x0e, 0xf0, 0x36, 0x5c, 0xd6, 0x57, 0xd5, 0x57, 0x35,
+  0x5c, 0x0f, 0xf0,
+]);
 
 // const smiley = memory.data<u8>([
 //   0b11000011, 0b10000001, 0b00100100, 0b00100100, 0b00000000, 0b00100100,
@@ -18,18 +27,18 @@ function input(): void {
   const justPressed = gamepad & (gamepad ^ prevState);
 
   if (justPressed & w4.BUTTON_LEFT) {
-    snake.left()
+    snake.left();
   }
   if (justPressed & w4.BUTTON_RIGHT) {
-    snake.right()
+    snake.right();
   }
   if (justPressed & w4.BUTTON_UP) {
-    snake.up()
+    snake.up();
   }
   if (justPressed & w4.BUTTON_DOWN) {
-    snake.down()
+    snake.down();
   }
-  
+
   prevState = gamepad;
 }
 
@@ -43,6 +52,11 @@ export function update(): void {
     snake.update();
   }
   snake.draw();
+
+  // because we set the drawing colors, we need to change the drawing colors to:
+  store<u16>(w4.DRAW_COLORS, 0x4320);
+  // Blit draws a sprite at position `x`, `y` and uses DRAW_COLORS accordingly
+  w4.blit(fruitSprite, fruit.x * 8, fruit.y * 8, 8, 8, w4.BLIT_2BPP);
 }
 
 export function start(): void {
@@ -51,3 +65,9 @@ export function start(): void {
   store<u32>(w4.PALETTE, 0x426e5d, 2 * sizeof<u32>());
   store<u32>(w4.PALETTE, 0x20283d, 3 * sizeof<u32>());
 }
+
+// fruit
+// const fruitWidth = 8;
+// const fruitHeight = 8;
+// const fruitFlags = 1; // BLIT_2BPP
+// const fruitSprite = memory.data<u8>([ 0x00,0xa0,0x02,0x00,0x0e,0xf0,0x36,0x5c,0xd6,0x57,0xd5,0x57,0x35,0x5c,0x0f,0xf0 ]);
