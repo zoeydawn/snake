@@ -39,4 +39,40 @@ export class Snake {
       body[0].y = 19;
     }
   }
+
+  left(): void {
+    // w4.trace("left");
+
+    if (this.direction.x == 0) {
+      this.direction.x = -1;
+      this.direction.y = 0;
+    }
+  }
+
+  right(): void {
+    // w4.trace("right");
+
+    if (this.direction.x == 0) {
+      this.direction.x = 1;
+      this.direction.y = 0;
+    }
+  }
+
+  up(): void {
+    // w4.trace("up");
+
+    if (this.direction.y == 0) {
+      this.direction.x = 0;
+      this.direction.y = -1;
+    }
+  }
+
+  down(): void {
+    // w4.trace("down");
+
+    if (this.direction.y == 0) {
+      this.direction.x = 0;
+      this.direction.y = 1;
+    }
+  }
 }

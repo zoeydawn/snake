@@ -4,6 +4,7 @@ import * as w4 from "./wasm4";
 // TODO: update the formatting and get rid of these damn simicolins
 
 const snake = new Snake();
+let prevState: u8;
 let frameCount = 0;
 
 // const smiley = memory.data<u8>([
@@ -11,8 +12,31 @@ let frameCount = 0;
 //   0b10011001, 0b11000011,
 // ]);
 
+// Move snake based on user input
+function input(): void {
+  const gamepad = load<u8>(w4.GAMEPAD1);
+  const justPressed = gamepad & (gamepad ^ prevState);
+
+  if (justPressed & w4.BUTTON_LEFT) {
+    snake.left()
+  }
+  if (justPressed & w4.BUTTON_RIGHT) {
+    snake.right()
+  }
+  if (justPressed & w4.BUTTON_UP) {
+    snake.up()
+  }
+  if (justPressed & w4.BUTTON_DOWN) {
+    snake.down()
+  }
+  
+  prevState = gamepad;
+}
+
 export function update(): void {
   frameCount++;
+
+  input();
 
   // speed control
   if (frameCount % 15 === 0) {
