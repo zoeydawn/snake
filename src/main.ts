@@ -50,6 +50,25 @@ export function update(): void {
   // speed control
   if (frameCount % 15 === 0) {
     snake.update();
+
+    if (snake.isDead()) {
+      // TODO: display "Game Over", the score, and a "play again" button
+      snake.reset();
+      w4.trace("dead!");
+    }
+
+    // detect collision with fruit
+    if (snake.body[0].equals(fruit)) {
+      let tail = snake.body[snake.body.length - 1];
+
+      // grow the snake
+      snake.body.push(new Point(tail.x, tail.y));
+
+      // relocate the fruit
+      // TODO: don't allow the fruit to spawn inside the snake
+      fruit.x = rnd(20);
+      fruit.y = rnd(20);
+    }
   }
   snake.draw();
 

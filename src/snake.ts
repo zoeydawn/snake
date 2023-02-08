@@ -40,6 +40,23 @@ export class Snake {
     }
   }
 
+  isDead(): bool {
+    const head = this.body[0];
+
+    for (let i = 1, len = this.body.length; i < len; i++) {
+      if (this.body[i].equals(head)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  reset(): void {
+    this.body = [new Point(2, 0), new Point(1, 0), new Point(0, 0)];
+    this.direction = new Point(1, 0);
+  }
+
   left(): void {
     // w4.trace("left");
 
