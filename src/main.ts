@@ -77,3 +77,20 @@ export function start(): void {
   store<u32>(w4.PALETTE, 0x426e5d, 2 * sizeof<u32>())
   store<u32>(w4.PALETTE, 0x20283d, 3 * sizeof<u32>())
 }
+
+// TODO: add different levels
+
+// To import PNG files:
+// w4 png2src --assemblyscript file_name.png
+// To import PNG file into a file (example):
+// w4 png2src --assemblyscript fruit.png >> main.ts
+// https://wasm4.org/docs/tutorials/snake/placing-the-fruit
+
+// To bundle to HTML:
+// w4 bundle build/cart.wasm --title "Snake" --html snake.html
+// https://wasm4.org/docs/guides/distribution/#bundle-to-html
+
+// Run in dev mode:
+// w4 watch
+// or
+// w4 watch --no-open
